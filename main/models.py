@@ -12,7 +12,7 @@ class Nota(models.Model):
 
 
 class UserProfile(models.Model):
-    roles = (("Cliente", "Cliente"), ("Operario", "Operario."))
+    roles = (("Cliente", "Cliente"), ("Operario", "Operario"))
 
     user = models.OneToOneField(
         User, related_name="user_profile", on_delete=models.CASCADE
@@ -20,7 +20,7 @@ class UserProfile(models.Model):
     rol = models.CharField(max_length=100, choices=roles)
 
     def __str__(self):
-        return self.user.username
+        return f'{self.user.username} ({self.rol})'
 
 
 # categoria
@@ -36,7 +36,6 @@ class Categoria(models.Model):
 class Equipo(models.Model):
     nombre = models.CharField(max_length=30)
     imagen = models.URLField(max_length=255)
-    estado = models.CharField(max_length=45)
     estados = (
         ("disponible", "disponible"),
         ("arrendado", "arrendado"),

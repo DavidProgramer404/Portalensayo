@@ -7,12 +7,19 @@ from django.views import View
 from django.utils.decorators import method_decorator
 from django.contrib import messages
 from django.contrib.auth.decorators import user_passes_test, login_required
-from main.models import UserProfile
+from main.models import UserProfile, Equipo
 from main.forms import NotaModelForm
 
 # Vista abierta a todo público
 def inicio(req):
-  return render(req, 'index.html')
+  # 1. Me traigo los equipos disponibles
+  equipos = Equipo.objects.filter(estado='disponible').all()
+  # 2. Creo el diccionario con los datos
+  context = {
+    'equipos': equipos
+  }
+  # 3. Cargo el template
+  return render(req, 'index.html', context)
 
 # ClassView abierta
 class RegistroView(View):
@@ -33,7 +40,7 @@ class RegistroView(View):
     # 3. Creamos al usuario
     user = User.objects.create_user(username=username, email=email, password=password)
     # 4. Creamos el user_profile
-    UserProfile.objects.create(user=user, rol='empleado')
+    UserProfile.objects.create(user=user, rol='Cliente')
     # 5. Feedback y redirigimos
     messages.success(req, 'Usuario creado')
     return redirect('/')

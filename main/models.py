@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 # Create your models here.
 class Nota(models.Model):
@@ -43,6 +43,7 @@ class Equipo(models.Model):
     )
     estado = models.CharField(max_length=20, choices=estados)
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
+    precio = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(100000)], default=1000)
 
     def __str__(self):
         return self.nombre

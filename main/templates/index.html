@@ -34,8 +34,10 @@
               <tr>
                 <th scope="row">{{ equipo.id }}</th>
                 <td>{{equipo.nombre}}</td>
-                <td>Otto</td>
-                <td>@mdo</td>
+                <td>{{equipo.precio}}</td>
+                <td>
+                  <a href="#" class="btn btn-secondary">Arrendar</a>
+                </td>
               </tr>
             {% endfor %}
           </tbody>
